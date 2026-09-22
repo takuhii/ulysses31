@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { sources, getSourceBySlug, episodesForSource } from "@/lib/data";
 import { EpisodeCard } from "@/components/EpisodeCard";
+import { JsonLd } from "@/components/JsonLd";
+import { sourceLd, breadcrumbLd } from "@/lib/seo";
 
 interface Params {
   params: { slug: string };
@@ -36,6 +38,16 @@ export default function SourcePage({ params }: Params) {
 
   return (
     <article className="container">
+      <JsonLd
+        data={[
+          sourceLd(source),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: "Sources", path: "/sources" },
+            { name: source.work, path: `/sources/${source.slug}` },
+          ]),
+        ]}
+      />
       <div className="breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">/</span>

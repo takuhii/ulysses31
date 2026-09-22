@@ -69,12 +69,19 @@ required for the site to work — it all builds on what's already in place.
 
 ## SEO & metadata
 
-- [ ] **Generate real OG images** per episode/myth (e.g. `opengraph-image.tsx`
-      route handlers) instead of relying on the default card.
-- [ ] **JSON-LD structured data** — `TVEpisode` / `CreativeWork` / `BreadcrumbList`
-      for episode and source pages.
-- [ ] **Set the real production domain** — replace the `example` placeholder in
-      `layout.tsx`, `sitemap.ts` and `robots.ts`.
+- [x] **JSON-LD structured data** — `WebSite` + `Organization` sitewide,
+      `TVEpisode` + `BreadcrumbList` on episodes, `Book`/`Person` on sources,
+      `DefinedTerm` on myths. (`src/lib/seo.ts`, `src/components/JsonLd.tsx`)
+- [x] **Open Graph image** — static `public/og.svg` referenced from metadata
+      (basePath-aware; a per-page `opengraph-image.tsx` route was tried but does
+      not emit static files under `output: "export"` on a subpath host).
+- [x] **Set the real production domain** — `takuhii.github.io/ulysses31` set in
+      `layout.tsx`, `sitemap.ts`, `robots.ts` and `seo.ts`.
+- [ ] **Per-episode OG images** — would need a build-time PNG generator script
+      (Satori/`@vercel/og` invoked outside Next), or a switch to a host that
+      supports dynamic routes. Nice-to-have, not required.
+- [ ] **PNG fallback for og.svg** — some older social scrapers don't render SVG
+      OG images; add a rasterised PNG if link-preview coverage matters.
 
 ## Engineering & quality
 

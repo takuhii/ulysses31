@@ -12,6 +12,8 @@ import {
 import { ClassificationBadge, ConfidenceTag, AdaptationStrength, strengthFromEpisode } from "@/components/Badges";
 import { MythologicalDNA } from "@/components/MythologicalDNA";
 import { ComparisonCards } from "@/components/ComparisonCards";
+import { JsonLd } from "@/components/JsonLd";
+import { episodeLd, breadcrumbLd } from "@/lib/seo";
 
 interface Params {
   params: { slug: string };
@@ -68,6 +70,16 @@ export default function EpisodePage({ params }: Params) {
 
   return (
     <article className="container">
+      <JsonLd
+        data={[
+          episodeLd(episode),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: "Episodes", path: "/episodes" },
+            { name: episode.englishTitle, path: `/episodes/${episode.slug}` },
+          ]),
+        ]}
+      />
       <div className="breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">/</span>

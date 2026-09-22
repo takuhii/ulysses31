@@ -8,6 +8,8 @@ import {
   getSourceBySlug,
 } from "@/lib/data";
 import { EpisodeCard } from "@/components/EpisodeCard";
+import { JsonLd } from "@/components/JsonLd";
+import { mythLd, breadcrumbLd } from "@/lib/seo";
 
 interface Params {
   params: { slug: string };
@@ -44,6 +46,16 @@ export default function MythPage({ params }: Params) {
 
   return (
     <article className="container">
+      <JsonLd
+        data={[
+          mythLd(entity),
+          breadcrumbLd([
+            { name: "Home", path: "/" },
+            { name: "Myths", path: "/myths" },
+            { name: entity.name, path: `/myths/${entity.slug}` },
+          ]),
+        ]}
+      />
       <div className="breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">/</span>
